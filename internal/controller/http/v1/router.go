@@ -4,7 +4,6 @@ package v1
 import (
 	"net/http"
 
-	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	swaggerFiles "github.com/swaggo/files"
@@ -38,13 +37,9 @@ func NewRouter(handler *gin.Engine, l logger.Interface, t usecase.Translation) {
 	// Prometheus metrics
 	handler.GET("/metrics", gin.WrapH(promhttp.Handler()))
 
-	// REST Routers
+	// Routers
 	h := handler.Group("/v1")
 	{
 		newTranslationRoutes(h, t, l)
 	}
-
-	// Static React Frontend
-	handler.Use(static.Serve("/", static.LocalFile("../../../../pkg/react_frontend/dist", true)))
-
 }

@@ -14,7 +14,7 @@ const webpack = require('webpack');
 const plugins = [
   new CleanWebpackPlugin({
     cleanOnceBeforeBuildPatterns: [
-      `${root}/../dist`,
+      `${root}/../../dist`,
     ],
   }),
   new MiniCssExtractPlugin({
@@ -46,7 +46,7 @@ module.exports = {
   mode,
   entry: ['@babel/polyfill', `${root}/../../client/src/index.js`],
   output: {
-    path: `${root}/../dist`,
+    path: `${root}/../../dist`,
     publicPath: '/',
     filename: 'js/[name].js',
   },

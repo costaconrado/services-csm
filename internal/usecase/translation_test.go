@@ -9,7 +9,7 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"github.com/costaconrado/services-csm/internal/entity"
-	usecase "github.com/costaconrado/services-csm/internal/usecase/translation"
+	"github.com/costaconrado/services-csm/internal/usecase"
 )
 
 var errInternalServErr = errors.New("internal server error")
