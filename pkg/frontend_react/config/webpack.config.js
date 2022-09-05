@@ -14,7 +14,7 @@ const webpack = require('webpack');
 const plugins = [
   new CleanWebpackPlugin({
     cleanOnceBeforeBuildPatterns: [
-      `${root}/../../dist`,
+      `${root}/../dist`,
     ],
   }),
   new MiniCssExtractPlugin({
@@ -22,7 +22,7 @@ const plugins = [
   }),
   new HtmlWebpackPlugin({
     inject: true,
-    template: `${root}/../../client/public/index.html`,
+    template: `${root}/../../frontend_react/public/index.html`,
     minify: {
       html5: true,
       collapseWhitespace: true,
@@ -44,9 +44,9 @@ const plugins = [
 
 module.exports = {
   mode,
-  entry: ['@babel/polyfill', `${root}/../../client/src/index.js`],
+  entry: ['@babel/polyfill', `${root}/../../frontend_react/src/index.js`],
   output: {
-    path: `${root}/../../dist`,
+    path: `${root}/../dist`,
     publicPath: '/',
     filename: 'js/[name].js',
   },
