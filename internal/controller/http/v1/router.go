@@ -28,6 +28,9 @@ func NewRouter(handler *gin.Engine, l logger.Interface, t usecase.Translation) {
 	handler.Use(gin.Logger())
 	handler.Use(gin.Recovery())
 
+	// Static react files for frontend
+	handler.Use(static.Serve("/", static.LocalFile("./pkg/frontend_react/dist", true)))
+
 	// Swagger
 	swaggerHandler := ginSwagger.DisablingWrapHandler(swaggerFiles.Handler, "DISABLE_SWAGGER_HTTP_HANDLER")
 	handler.GET("/swagger/*any", swaggerHandler)
@@ -43,7 +46,5 @@ func NewRouter(handler *gin.Engine, l logger.Interface, t usecase.Translation) {
 	{
 		newTranslationRoutes(h, t, l)
 	}
-
-	handler.Use(static.Serve("/", static.LocalFile("../../../../pkg/frontend_react/dist", true)))
 
 }
