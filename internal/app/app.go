@@ -11,9 +11,8 @@ import (
 
 	"github.com/costaconrado/services-csm/config"
 	v1 "github.com/costaconrado/services-csm/internal/controller/http/v1"
-	"github.com/costaconrado/services-csm/internal/usecase"
-	"github.com/costaconrado/services-csm/internal/usecase/repo"
-	"github.com/costaconrado/services-csm/internal/usecase/webapi"
+	"github.com/costaconrado/services-csm/internal/usecase/proposal"
+	proposalRepo "github.com/costaconrado/services-csm/internal/usecase/proposal/repo"
 	"github.com/costaconrado/services-csm/pkg/httpserver"
 	"github.com/costaconrado/services-csm/pkg/logger"
 	"github.com/costaconrado/services-csm/pkg/postgres"
@@ -24,21 +23,19 @@ func Run(cfg *config.Config) {
 	l := logger.New(cfg.Log.Level)
 
 	// Repository
-	pg, err := postgres.New(cfg.PG.URL, postgres.MaxPoolSize(cfg.PG.PoolMax))
+	pg, err := postgres.New(cfg.PG)
 	if err != nil {
 		l.Fatal(fmt.Errorf("app - Run - postgres.New: %w", err))
 	}
 	defer pg.Close()
 
 	// Use case
-	translationUseCase := usecase.New(
-		repo.New(pg),
-		webapi.New(),
-	)
+	repo := proposalRepo.New(pg)
+	proposalUseCase := proposal.New(repo)
 
 	// HTTP Server
 	handler := gin.New()
-	v1.NewRouter(handler, l, translationUseCase)
+	v1.NewRouter(handler, l, proposalUseCase)
 	httpServer := httpserver.New(handler, httpserver.Port(cfg.HTTP.Port))
 
 	// Waiting signal

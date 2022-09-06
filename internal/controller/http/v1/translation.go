@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"github.com/costaconrado/services-csm/internal/entity"
-	"github.com/costaconrado/services-csm/internal/usecase"
+	usecase "github.com/costaconrado/services-csm/internal/usecase/translation"
 	"github.com/costaconrado/services-csm/pkg/logger"
 )
 

@@ -12,7 +12,7 @@ import (
 
 	// Swagger docs.
 	_ "github.com/costaconrado/services-csm/docs"
-	"github.com/costaconrado/services-csm/internal/usecase"
+	usecase "github.com/costaconrado/services-csm/internal/usecase/proposal"
 	"github.com/costaconrado/services-csm/pkg/logger"
 )
 
@@ -23,13 +23,14 @@ import (
 // @version     1.0
 // @host        localhost:8080
 // @BasePath    /v1
-func NewRouter(handler *gin.Engine, l logger.Interface, t usecase.Translation) {
+func NewRouter(handler *gin.Engine, log logger.Interface, proposal usecase.Proposal) {
 	// Options
 	handler.Use(gin.Logger())
 	handler.Use(gin.Recovery())
 
 	// Static react files for frontend
 	handler.Use(static.Serve("/", static.LocalFile("./pkg/frontend_react/dist", true)))
+	handler.Use(static.Serve("/public", static.LocalFile("./pkg/frontend_react/public", true)))
 
 	// Swagger
 	swaggerHandler := ginSwagger.DisablingWrapHandler(swaggerFiles.Handler, "DISABLE_SWAGGER_HTTP_HANDLER")
@@ -44,7 +45,7 @@ func NewRouter(handler *gin.Engine, l logger.Interface, t usecase.Translation) {
 	// Routers
 	h := handler.Group("/v1")
 	{
-		newTranslationRoutes(h, t, l)
+		newProposalRoutes(h, proposal, log)
 	}
 
 }
