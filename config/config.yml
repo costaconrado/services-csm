@@ -11,4 +11,5 @@ logger:
 
 postgres:
   pool_max: 2
-
+  max_attempts: 15
+  conn_seconds_timeout: 3

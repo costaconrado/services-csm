@@ -33,8 +33,14 @@ type (
 
 	// PG -.
 	PG struct {
-		PoolMax int    `env-required:"true" yaml:"pool_max" env:"PG_POOL_MAX"`
-		URL     string `env-required:"true"                 env:"PG_URL"`
+		PoolMax            int    `env-required:"true" yaml:"pool_max" env:"POSTGRESQL_POOL_MAX"`
+		MaxConnAttempts    int    `env-required:"true" yaml:"max_attempts" env:"POSTGRESQL_MAX_ATTEMPTS"`
+		User               string `env-required:"true" env:"POSTGRESQL_USER"`
+		Pass               string `env-required:"true" env:"POSTGRESQL_PASSWORD"`
+		Host               string `env-required:"true" env:"POSTGRESQL_HOST"`
+		Port               int    `env-required:"true" env:"POSTGRESQL_PORT"`
+		Database           string `env-required:"true" env:"POSTGRESQL_DATABASE"`
+		ConnSecondsTimeout int    `env-required:"true" yaml:"conn_seconds_timeout"`
 	}
 )
 
