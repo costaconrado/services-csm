@@ -11,9 +11,9 @@ import (
 
 	"github.com/costaconrado/services-csm/config"
 	v1 "github.com/costaconrado/services-csm/internal/controller/http/v1"
-	"github.com/costaconrado/services-csm/internal/usecase"
-	"github.com/costaconrado/services-csm/internal/usecase/repo"
-	"github.com/costaconrado/services-csm/internal/usecase/webapi"
+	"github.com/costaconrado/services-csm/internal/usecase/translation"
+	"github.com/costaconrado/services-csm/internal/usecase/translation/repo"
+	"github.com/costaconrado/services-csm/internal/usecase/translation/webapi"
 	"github.com/costaconrado/services-csm/pkg/httpserver"
 	"github.com/costaconrado/services-csm/pkg/logger"
 	"github.com/costaconrado/services-csm/pkg/postgres"
@@ -31,7 +31,7 @@ func Run(cfg *config.Config) {
 	defer pg.Close()
 
 	// Use case
-	translationUseCase := usecase.New(
+	translationUseCase := translation.New(
 		repo.New(pg),
 		webapi.New(),
 	)

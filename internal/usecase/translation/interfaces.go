@@ -1,5 +1,5 @@
 // Package usecase implements application business logic. Each logic group in own file.
-package usecase
+package translation
 
 import (
 	"context"
@@ -7,7 +7,7 @@ import (
 	"github.com/costaconrado/services-csm/internal/entity"
 )
 
-//go:generate mockgen -source=interfaces.go -destination=./mocks_test.go -package=usecase_test
+//go:generate mockgen -source=interfaces.go -destination=./mocks_test.go -package=translation_test
 
 type (
 	// Translation -.

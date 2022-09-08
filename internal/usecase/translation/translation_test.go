@@ -1,4 +1,4 @@
-package usecase_test
+package translation_test
 
 import (
 	"context"
@@ -9,7 +9,7 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"github.com/costaconrado/services-csm/internal/entity"
-	"github.com/costaconrado/services-csm/internal/usecase"
+	usecase "github.com/costaconrado/services-csm/internal/usecase/translation"
 )
 
 var errInternalServErr = errors.New("internal server error")

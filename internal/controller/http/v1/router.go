@@ -12,7 +12,7 @@ import (
 
 	// Swagger docs.
 	_ "github.com/costaconrado/services-csm/docs"
-	"github.com/costaconrado/services-csm/internal/usecase"
+	usecase "github.com/costaconrado/services-csm/internal/usecase/translation"
 	"github.com/costaconrado/services-csm/pkg/logger"
 )
 
@@ -30,6 +30,7 @@ func NewRouter(handler *gin.Engine, l logger.Interface, t usecase.Translation) {
 
 	// Static react files for frontend
 	handler.Use(static.Serve("/", static.LocalFile("./pkg/frontend_react/dist", true)))
+	handler.Use(static.Serve("/public", static.LocalFile("./pkg/frontend_react/public", true)))
 
 	// Swagger
 	swaggerHandler := ginSwagger.DisablingWrapHandler(swaggerFiles.Handler, "DISABLE_SWAGGER_HTTP_HANDLER")
