@@ -12,7 +12,7 @@ import (
 
 	// Swagger docs.
 	_ "github.com/costaconrado/services-csm/docs"
-	usecase "github.com/costaconrado/services-csm/internal/usecase/translation"
+	usecase "github.com/costaconrado/services-csm/internal/usecase/proposal"
 	"github.com/costaconrado/services-csm/pkg/logger"
 )
 
@@ -23,7 +23,7 @@ import (
 // @version     1.0
 // @host        localhost:8080
 // @BasePath    /v1
-func NewRouter(handler *gin.Engine, l logger.Interface, t usecase.Translation) {
+func NewRouter(handler *gin.Engine, l logger.Interface, t usecase.Proposal) {
 	// Options
 	handler.Use(gin.Logger())
 	handler.Use(gin.Recovery())

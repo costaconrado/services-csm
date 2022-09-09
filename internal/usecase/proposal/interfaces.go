@@ -17,8 +17,10 @@ type (
 	}
 
 	ProposalRepo interface {
-		Store(context.Context, entity.Proposal) error
-		GetHistory(context.Context) ([]entity.Proposal, error)
+		GetProposal(context.Context, uint) (entity.Proposal, error)
+		CreateProposal(context.Context, entity.Proposal) (entity.Proposal, error)
+		UpdateProposal(context.Context, entity.Proposal) (entity.Proposal, error)
+		ChangeStageProposal(context.Context, entity.Proposal, entity.DealStage) (entity.Proposal, error)
 	}
 
 	ProposalWebAPI interface {

@@ -5,32 +5,35 @@ package entity
 import "time"
 
 type Proposal struct {
-	CustomerContact CustomerContact `json:"customerContact"`
-	Customer        Customer        `json:"customer"`
-	CreationDate    time.Time       `json:"creationDate"  example:"2022-09-15T21:54:42.123Z"`
-	Offerings       []Offering      `json:"offerings"`
-	Stage           DealStage       `json:"stage"  example:"0"`
+	ID              uint
+	CustomerContact CustomerContact
+	CreatedAt       time.Time `example:"2022-09-15T21:54:42.123Z"`
+	Offerings       []Offering
+	Stage           DealStage `example:"0"`
 }
 
 type CustomerContact struct {
-	Name     string   `json:"name"  example:"John Doe"`
-	Email    string   `json:"email"  example:"john.doe@example.com"`
-	Phone    string   `json:"phone"  example:"+55 (31) 9999 9999"`
-	Customer Customer `json:"customer"`
+	ID       uint
+	Name     string `example:"John Doe"`
+	Email    string `example:"john.doe@example.com"`
+	Phone    string `example:"+55 (31) 9999 9999"`
+	Customer Customer
 }
 
 type Customer struct {
-	Name     string `json:"name"  example:"Example Co."`
-	Segment  string `json:"segment"  example:"Enterprise"`
-	Vertical string `json:"vertical"  example:"Banking and Securities"`
+	ID       uint
+	Name     string `example:"Example Co."`
+	Segment  string `example:"Enterprise"`
+	Vertical string `example:"Banking and Securities"`
 }
 
 type Offering struct {
-	Name      string     `json:"name"  example:"Kubernetes Adminstration Training"`
-	SKU       string     `json:"sku"  example:"KUB101"`
-	UnitValue float32    `json:"unitValue"  example:"4100.50"`
-	Quantity  uint       `json:"quantity"  example:"12"`
-	Addons    []Offering `json:"addons"`
+	ID        uint
+	Name      string  `example:"Kubernetes Adminstration Training"`
+	SKU       string  `example:"KUB101"`
+	UnitValue float32 `example:"4100.50"`
+	Quantity  uint    `example:"12"`
+	Addons    []Offering
 }
 
 type DealStage uint8
