@@ -23,7 +23,7 @@ import (
 // @version     1.0
 // @host        localhost:8080
 // @BasePath    /v1
-func NewRouter(handler *gin.Engine, l logger.Interface, t usecase.Proposal) {
+func NewRouter(handler *gin.Engine, log logger.Interface, proposal usecase.Proposal) {
 	// Options
 	handler.Use(gin.Logger())
 	handler.Use(gin.Recovery())
@@ -45,7 +45,7 @@ func NewRouter(handler *gin.Engine, l logger.Interface, t usecase.Proposal) {
 	// Routers
 	h := handler.Group("/v1")
 	{
-		newTranslationRoutes(h, t, l)
+		newProposalRoutes(h, proposal, log)
 	}
 
 }
