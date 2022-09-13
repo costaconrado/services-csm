@@ -46,7 +46,10 @@ func (uc *ProposalUseCase) Update(ctx context.Context, proposal entity.Proposal)
 }
 
 func (uc *ProposalUseCase) ChangeStage(ctx context.Context, proposal entity.Proposal, stage entity.DealStage) (entity.Proposal, error) {
-	proposalSync, err := uc.repo.ChangeStageProposal(ctx, proposal, stage)
+	proposalSync, err := uc.Get(ctx, proposal.ID)
+	proposalSync.Stage = stage
+	proposalSync, err = uc.Update(ctx, proposal)
+
 	if err != nil {
 		return proposal, fmt.Errorf("ProposalUseCase - ChangeStageProposal: %w", err)
 	}
