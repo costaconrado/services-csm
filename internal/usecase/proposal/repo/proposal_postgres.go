@@ -66,22 +66,3 @@ func (r *ProposalRepo) UpdateProposal(ctx context.Context, proposal entity.Propo
 	}
 	return proposal, nil
 }
-
-func (r *ProposalRepo) ChangeStageProposal(ctx context.Context, proposal entity.Proposal, stage entity.DealStage) (entity.Proposal, error) {
-	if proposal.ID == 0 {
-		return proposal, fmt.Errorf("ProposalRepo - ChangeStageProposal: Proposal's ID is nil")
-	}
-
-	model := &Proposal{}
-	model.Marshal(proposal)
-	err := r.DB.Model(&model).Update("stage", stage).Error
-	if err != nil {
-		return proposal, fmt.Errorf("ProposalRepo - ChangeStageProposal: %w", err)
-	}
-
-	proposal, err = model.Unmarshal()
-	if err != nil {
-		return proposal, fmt.Errorf("ProposalRepo - ChangeStageProposal: %w", err)
-	}
-	return proposal, nil
-}
