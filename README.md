@@ -1,7 +1,4 @@
-[![GitHub](https://img.shields.io/github/license/costaconrado/service-csm)](https://github.com/costaconrado/service-csm/blob/main/LICENSE)
-
-Clean Architecture template for Golang services based on [Evrone's template](https://github.com/evrone/go-clean-template)
-
+![GitHub](https://img.shields.io/github/license/costaconrado/services-csm?style=for-the-badge)
 ## Overview
 
 The purpose of the template is:
