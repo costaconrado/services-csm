@@ -15,12 +15,17 @@ type ProposalRepo struct {
 }
 
 func New(pg *postgres.Postgres) *ProposalRepo {
+	pg.DB.AutoMigrate(&Proposal{})
+	pg.DB.AutoMigrate(&Customer{})
+	pg.DB.AutoMigrate(&CustomerContact{})
+	pg.DB.AutoMigrate(&Offering{})
+
 	return &ProposalRepo{pg}
 }
 
 func (r *ProposalRepo) GetProposal(ctx context.Context, ID uint) (entity.Proposal, error) {
 	model := &Proposal{}
-	err := r.DB.First(&model, ID).Error
+	err := r.DB.Preload("CustomerContact.Customer").Preload("Offerings.Addons").First(&model, ID).Error
 	var proposal entity.Proposal
 
 	if err != nil {
@@ -33,6 +38,27 @@ func (r *ProposalRepo) GetProposal(ctx context.Context, ID uint) (entity.Proposa
 	}
 
 	return proposal, nil
+}
+
+func (r *ProposalRepo) ListProposals(ctx context.Context, page int) ([]entity.Proposal, error) {
+	var proposalModels []Proposal
+	var proposalEntities []entity.Proposal
+	err := r.DB.
+		Limit(10).
+		Offset(page * 10).
+		Preload("CustomerContact.Customer").
+		Find(&proposalModels).Error
+
+	if err != nil {
+		return nil, fmt.Errorf("ProposalRepo - GetProposal: %w", err)
+	}
+
+	proposalEntities, err = UnmarshalProposalList(proposalModels)
+	if err != nil {
+		return nil, fmt.Errorf("ProposalRepo - GetProposal: %w", err)
+	}
+
+	return proposalEntities, nil
 }
 
 func (r *ProposalRepo) CreateProposal(ctx context.Context, proposal entity.Proposal) (entity.Proposal, error) {

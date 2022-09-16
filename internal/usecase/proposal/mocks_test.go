@@ -80,6 +80,21 @@ func (mr *MockProposalMockRecorder) Get(arg0, arg1 interface{}) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Get", reflect.TypeOf((*MockProposal)(nil).Get), arg0, arg1)
 }
 
+// List mocks base method.
+func (m *MockProposal) List(arg0 context.Context, arg1 int) ([]entity.Proposal, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "List", arg0, arg1)
+	ret0, _ := ret[0].([]entity.Proposal)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// List indicates an expected call of List.
+func (mr *MockProposalMockRecorder) List(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "List", reflect.TypeOf((*MockProposal)(nil).List), arg0, arg1)
+}
+
 // Update mocks base method.
 func (m *MockProposal) Update(arg0 context.Context, arg1 entity.Proposal) (entity.Proposal, error) {
 	m.ctrl.T.Helper()
@@ -146,6 +161,21 @@ func (m *MockProposalRepo) GetProposal(arg0 context.Context, arg1 uint) (entity.
 func (mr *MockProposalRepoMockRecorder) GetProposal(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetProposal", reflect.TypeOf((*MockProposalRepo)(nil).GetProposal), arg0, arg1)
+}
+
+// ListProposals mocks base method.
+func (m *MockProposalRepo) ListProposals(arg0 context.Context, arg1 int) ([]entity.Proposal, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ListProposals", arg0, arg1)
+	ret0, _ := ret[0].([]entity.Proposal)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ListProposals indicates an expected call of ListProposals.
+func (mr *MockProposalRepoMockRecorder) ListProposals(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListProposals", reflect.TypeOf((*MockProposalRepo)(nil).ListProposals), arg0, arg1)
 }
 
 // UpdateProposal mocks base method.

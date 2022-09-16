@@ -58,6 +58,33 @@ func (model *CustomerContact) Unmarshal() (entity.CustomerContact, error) {
 	return ent, nil
 }
 
+func UnmarshalProposalList(list []Proposal) ([]entity.Proposal, error) {
+	var ent []entity.Proposal
+	modelJson, marshalError := json.Marshal(list)
+	if marshalError != nil {
+		return ent, marshalError
+	}
+
+	unmarshalError := json.Unmarshal(modelJson, &ent)
+	if unmarshalError != nil {
+		return ent, unmarshalError
+	}
+	return ent, nil
+}
+func MarshalProposalList(list []entity.Proposal) ([]Proposal, error) {
+	var ent []Proposal
+	modelJson, marshalError := json.Marshal(list)
+	if marshalError != nil {
+		return ent, marshalError
+	}
+
+	unmarshalError := json.Unmarshal(modelJson, &ent)
+	if unmarshalError != nil {
+		return ent, unmarshalError
+	}
+	return ent, nil
+}
+
 func (model *Proposal) Unmarshal() (entity.Proposal, error) {
 	var ent entity.Proposal
 	modelJson, marshalError := json.Marshal(model)

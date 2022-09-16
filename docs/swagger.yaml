@@ -1,42 +1,72 @@
 basePath: /v1
 definitions:
-  entity.Translation:
+  entity.Customer:
     properties:
-      destination:
-        example: en
+      id:
+        type: integer
+      name:
+        example: Example Co.
         type: string
-      original:
-        example: текст для перевода
+      segment:
+        example: Enterprise
         type: string
-      source:
-        example: auto
-        type: string
-      translation:
-        example: text for translation
+      vertical:
+        example: Banking and Securities
         type: string
     type: object
-  v1.doTranslateRequest:
+  entity.CustomerContact:
     properties:
-      destination:
-        example: en
+      customer:
+        $ref: '#/definitions/entity.Customer'
+      email:
+        example: john.doe@example.com
         type: string
-      original:
-        example: текст для перевода
+      id:
+        type: integer
+      name:
+        example: John Doe
         type: string
-      source:
-        example: auto
+      phone:
+        example: +55 (31) 9999 9999
         type: string
-    required:
-    - destination
-    - original
-    - source
     type: object
-  v1.historyResponse:
+  entity.Offering:
     properties:
-      history:
+      addons:
         items:
-          $ref: '#/definitions/entity.Translation'
+          $ref: '#/definitions/entity.Offering'
         type: array
+      id:
+        type: integer
+      name:
+        example: Kubernetes Adminstration Training
+        type: string
+      quantity:
+        example: 12
+        type: integer
+      sku:
+        example: KUB101
+        type: string
+      unitValue:
+        example: 4100.5
+        type: number
+    type: object
+  entity.Proposal:
+    properties:
+      createdAt:
+        example: "2022-09-15T21:54:42.123Z"
+        type: string
+      customerContact:
+        $ref: '#/definitions/entity.CustomerContact'
+      id:
+        type: integer
+      offerings:
+        items:
+          $ref: '#/definitions/entity.Offering'
+        type: array
+      stage:
+        example: 0
+        type: integer
     type: object
   v1.response:
     properties:
@@ -51,26 +81,19 @@ info:
   title: Go Clean Template API
   version: "1.0"
 paths:
-  /translation/do-translate:
-    post:
-      consumes:
-      - application/json
-      description: Translate a text
-      operationId: do-translate
-      parameters:
-      - description: Set up translation
-        in: body
-        name: request
-        required: true
-        schema:
-          $ref: '#/definitions/v1.doTranslateRequest'
+  /proposal/list:
+    get:
+      description: Get a list of proposals
+      operationId: list-proposal
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/entity.Translation'
+            items:
+              $ref: '#/definitions/entity.Proposal'
+            type: array
         "400":
           description: Bad Request
           schema:
@@ -79,27 +102,7 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/v1.response'
-      summary: Translate
+      summary: Proposal
       tags:
-      - translation
-  /translation/history:
-    get:
-      consumes:
-      - application/json
-      description: Show all translation history
-      operationId: history
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/v1.historyResponse'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/v1.response'
-      summary: Show history
-      tags:
-      - translation
+      - proposal
 swagger: "2.0"
