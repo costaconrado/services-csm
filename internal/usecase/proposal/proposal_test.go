@@ -13,6 +13,7 @@ import (
 )
 
 var errNotFound = errors.New("proposal not found")
+var errInternalServErr = errors.New("internal server error")
 var emptyProposal = entity.Proposal{}
 var validPersistentProposal = entity.Proposal{
 	ID:        10,
@@ -248,6 +249,46 @@ func TestChangeStage(t *testing.T) {
 			res, err := proposal.ChangeStage(context.Background(), input.proposal, input.stage)
 
 			require.EqualValues(t, res, tc.res)
+			require.ErrorIs(t, err, tc.err)
+		})
+	}
+}
+
+func TestList(t *testing.T) {
+	t.Parallel()
+
+	proposal, repo := proposal(t)
+
+	tests := []test{
+		{
+			name: "empty result",
+			mock: func() {
+				repo.EXPECT().ListProposals(context.Background(), 0).Return(nil, nil)
+			},
+			res: []entity.Translation(nil),
+			err: nil,
+		},
+		{
+			name: "result with error",
+			mock: func() {
+				repo.EXPECT().ListProposals(context.Background(), 0).Return(nil, errInternalServErr)
+			},
+			res: []entity.Translation(nil),
+			err: errInternalServErr,
+		},
+	}
+
+	for _, tc := range tests {
+		tc := tc
+
+		t.Run(tc.name, func(t *testing.T) {
+			t.Parallel()
+
+			tc.mock()
+
+			res, err := proposal.List(context.Background(), 0)
+
+			require.Equal(t, res, tc.res)
 			require.ErrorIs(t, err, tc.err)
 		})
 	}

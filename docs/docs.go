@@ -16,36 +16,25 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/translation/do-translate": {
-            "post": {
-                "description": "Translate a text",
-                "consumes": [
-                    "application/json"
-                ],
+        "/proposal/list": {
+            "get": {
+                "description": "Get a list of proposals",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
-                    "translation"
+                    "proposal"
                 ],
-                "summary": "Translate",
-                "operationId": "do-translate",
-                "parameters": [
-                    {
-                        "description": "Set up translation",
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/v1.doTranslateRequest"
-                        }
-                    }
-                ],
+                "summary": "Proposal",
+                "operationId": "list-proposal",
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/entity.Translation"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/entity.Proposal"
+                            }
                         }
                     },
                     "400": {
@@ -62,90 +51,104 @@ const docTemplate = `{
                     }
                 }
             }
-        },
-        "/translation/history": {
-            "get": {
-                "description": "Show all translation history",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "translation"
-                ],
-                "summary": "Show history",
-                "operationId": "history",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/v1.historyResponse"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/v1.response"
-                        }
-                    }
-                }
-            }
         }
     },
     "definitions": {
-        "entity.Translation": {
+        "entity.Customer": {
             "type": "object",
             "properties": {
-                "destination": {
-                    "type": "string",
-                    "example": "en"
+                "id": {
+                    "type": "integer"
                 },
-                "original": {
+                "name": {
                     "type": "string",
-                    "example": "текст для перевода"
+                    "example": "Example Co."
                 },
-                "source": {
+                "segment": {
                     "type": "string",
-                    "example": "auto"
+                    "example": "Enterprise"
                 },
-                "translation": {
+                "vertical": {
                     "type": "string",
-                    "example": "text for translation"
+                    "example": "Banking and Securities"
                 }
             }
         },
-        "v1.doTranslateRequest": {
+        "entity.CustomerContact": {
             "type": "object",
-            "required": [
-                "destination",
-                "original",
-                "source"
-            ],
             "properties": {
-                "destination": {
-                    "type": "string",
-                    "example": "en"
+                "customer": {
+                    "$ref": "#/definitions/entity.Customer"
                 },
-                "original": {
+                "email": {
                     "type": "string",
-                    "example": "текст для перевода"
+                    "example": "john.doe@example.com"
                 },
-                "source": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
                     "type": "string",
-                    "example": "auto"
+                    "example": "John Doe"
+                },
+                "phone": {
+                    "type": "string",
+                    "example": "+55 (31) 9999 9999"
                 }
             }
         },
-        "v1.historyResponse": {
+        "entity.Offering": {
             "type": "object",
             "properties": {
-                "history": {
+                "addons": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/entity.Translation"
+                        "$ref": "#/definitions/entity.Offering"
                     }
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "Kubernetes Adminstration Training"
+                },
+                "quantity": {
+                    "type": "integer",
+                    "example": 12
+                },
+                "sku": {
+                    "type": "string",
+                    "example": "KUB101"
+                },
+                "unitValue": {
+                    "type": "number",
+                    "example": 4100.5
+                }
+            }
+        },
+        "entity.Proposal": {
+            "type": "object",
+            "properties": {
+                "createdAt": {
+                    "type": "string",
+                    "example": "2022-09-15T21:54:42.123Z"
+                },
+                "customerContact": {
+                    "$ref": "#/definitions/entity.CustomerContact"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "offerings": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/entity.Offering"
+                    }
+                },
+                "stage": {
+                    "type": "integer",
+                    "example": 0
                 }
             }
         },

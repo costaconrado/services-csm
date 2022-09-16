@@ -21,7 +21,16 @@ func New(r ProposalRepo) *ProposalUseCase {
 func (uc *ProposalUseCase) Get(ctx context.Context, ID uint) (entity.Proposal, error) {
 	proposal, err := uc.repo.GetProposal(ctx, ID)
 	if err != nil {
-		return entity.Proposal{}, fmt.Errorf("ProposalUseCase - GetProposal: %w", err)
+		return entity.Proposal{}, fmt.Errorf("ProposalUseCase - Get: %w", err)
+	}
+
+	return proposal, nil
+}
+
+func (uc *ProposalUseCase) List(ctx context.Context, page int) ([]entity.Proposal, error) {
+	proposal, err := uc.repo.ListProposals(ctx, page)
+	if err != nil {
+		return nil, fmt.Errorf("ProposalUseCase - List: %w", err)
 	}
 
 	return proposal, nil
@@ -30,7 +39,7 @@ func (uc *ProposalUseCase) Get(ctx context.Context, ID uint) (entity.Proposal, e
 func (uc *ProposalUseCase) Create(ctx context.Context, proposal entity.Proposal) (entity.Proposal, error) {
 	proposalSync, err := uc.repo.CreateProposal(ctx, proposal)
 	if err != nil {
-		return proposal, fmt.Errorf("ProposalUseCase - CreateProposal: %w", err)
+		return proposal, fmt.Errorf("ProposalUseCase - Create: %w", err)
 	}
 
 	return proposalSync, nil
@@ -51,7 +60,7 @@ func (uc *ProposalUseCase) ChangeStage(ctx context.Context, proposal entity.Prop
 	proposalSync, err = uc.Update(ctx, proposal)
 
 	if err != nil {
-		return proposal, fmt.Errorf("ProposalUseCase - ChangeStageProposal: %w", err)
+		return proposal, fmt.Errorf("ProposalUseCase - ChangeStage: %w", err)
 	}
 
 	return proposalSync, nil
