@@ -1,19 +1,17 @@
 ![GitHub](https://img.shields.io/github/license/costaconrado/services-csm?style=for-the-badge)
 ## Overview
 
-The purpose of the template is:
+The purpose of the template is, using the principles of Robert Martin (aka Uncle Bob):
 - Show how to organize a project so logic keep extensible and clean
 - Show how to use repository pattern to access external data
-- Quickstart a small new project using Go providing backend and static files for React + PatternFly frontend
-- Show how to make use of OpenShift / Kubernetes resources to make this application more reliable
 
-Using the principles of Robert Martin (aka Uncle Bob).
-
-## Current Status
+## Current Project Status
 - Backend structured
 - Repository pattern structured
-- Frontend static files - not started
-- OpenShift resouces - not started
+
+## Future Updates
+- Add a React + PatternFly frontend provided from static files
+- Add integration with OpenShfift resources
 
 ## Content
 - [Quick start](#quick-start)
