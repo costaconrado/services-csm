@@ -16,12 +16,13 @@ The purpose of the template is, using the principles of Robert Martin (aka Uncle
 ## Content
 - [Quick start](#quick-start)
 - [Project structure](#project-structure)
-- [Dependency Injection](#dependency-injection)
-- [Clean Architecture](#clean-architecture)
+- [Similar projects](#similar-projects)
+- [Useful links](#useful-links)
 
 ## Quick start
 Local development:
 ```sh
+$ cp .env.example .env
 $ make run
 ```
 
